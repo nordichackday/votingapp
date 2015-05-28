@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>New Films Now</title>
+
+    <!-- Styling -->
+    <link href="lib/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="lib/bootstrap/bootstrap-theme.min.css" rel="stylesheet">
+    
+    <link href="build/css/main.css" rel="stylesheet">
+  </head>
+
+  <body>    
+    <div class="container">
+      <div class="topheader">
+        <div>Mentometer 2.0</div>
+      </div>      
+      <div id="content-wrapper">
+          <div id="votebuttons">
+            <button id="no" type="button" class="btn btn-default" aria-label="Left Align">
+              &#x1F621;
+            </button>            
+            <button id="yes" type="button" class="btn btn-default" aria-label="Left Align">
+              &#x1F60D;
+            </button>    
+          </div>
+      </div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="lib/underscore/underscore-min.js"></script>
+    <script src="lib/bootstrap/bootstrap.min.js"></script>
+
+    <script src="build/js/vote.js"></script>
+
+    <script>
+      $(document).ready(function() {
+        Vote.init();
+      });
+    </script>
+  
+  </body>
+</html>

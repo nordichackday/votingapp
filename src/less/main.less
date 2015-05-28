@@ -1,0 +1,96 @@
+@contentPad : 10px;
+@myRed: #CC0000;
+@myGreen: #497F29;
+@myGray: rgb(250, 250, 250);
+@myBlue: rgb(0, 140, 186);
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+.clearfix {
+	clear: both;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+li {
+	margin: 0;
+	padding: 0;
+}
+
+.topheader {
+	width: 100%;
+	background: rgb(250, 250, 250);
+	padding: @contentPad;
+	padding-bottom: 30px;
+}
+
+#votebuttons {
+	width: 100%;
+}
+
+#votebuttons button {
+	width: 40%;
+	margin: 0;
+	font-size: 2em;
+}
+
+#responsiveLayout {
+	.set(@availableW, @fontSize) {
+
+		.container{
+			width: 100%; //@availableW;
+			max-width: @availableW;
+			margin-right: auto;
+			margin-left: auto;
+			font-size: @fontSize;
+		}
+
+		#content-wrapper{
+			width: 100%; //@contentW;
+			margin-left: auto;
+			margin-right: auto;			
+		}
+	}
+}
+
+@media (max-width: 640px) {
+	#responsiveLayout > .set(100%, 13px);
+
+	.helpClear {
+		clear: both;
+	}
+}
+
+@media (min-width: 641px) and (max-width: 767px) {
+	#responsiveLayout > .set(100%, 13px);
+
+	.helpClear {
+		clear: none;
+	}	
+}
+
+@media (min-width: 768px) and (max-width: 1200px) {
+	#responsiveLayout > .set(100%, 15px);
+
+	.helpClear {
+		clear: none;
+	}	
+}
+
+@media (min-width: 1200px) {
+	#responsiveLayout > .set(1200px, 15px);
+
+	.helpClear {
+		clear: none;
+	}	
+}
+
