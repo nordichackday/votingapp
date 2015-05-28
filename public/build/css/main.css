@@ -1,0 +1,102 @@
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+.clearfix {
+  clear: both;
+}
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+li {
+  margin: 0;
+  padding: 0;
+}
+.topheader {
+  width: 100%;
+  background: #fafafa;
+  padding: 10px;
+  padding-bottom: 30px;
+}
+#votebuttons {
+  width: 100%;
+}
+#votebuttons button {
+  width: 40%;
+  margin: 0;
+  font-size: 2em;
+}
+@media (max-width: 640px) {
+  .container {
+    width: 100%;
+    max-width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 13px;
+  }
+  #content-wrapper {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .helpClear {
+    clear: both;
+  }
+}
+@media (min-width: 641px) and (max-width: 767px) {
+  .container {
+    width: 100%;
+    max-width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 13px;
+  }
+  #content-wrapper {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .helpClear {
+    clear: none;
+  }
+}
+@media (min-width: 768px) and (max-width: 1200px) {
+  .container {
+    width: 100%;
+    max-width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 15px;
+  }
+  #content-wrapper {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .helpClear {
+    clear: none;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 15px;
+  }
+  #content-wrapper {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .helpClear {
+    clear: none;
+  }
+}
