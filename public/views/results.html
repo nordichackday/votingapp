@@ -16,26 +16,26 @@
   <body>    
     <div class="container">
       <div class="topheader">
-        <div>Mentometer resultater</div>
+        <div>Mentometer 2.0</div>
       </div>      
       <div id="content-wrapper">
           <div id="results">
-  
+            
           </div>
       </div>
     </div>
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="lib/react/react.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="lib/underscore/underscore-min.js"></script>
     <script src="lib/bootstrap/bootstrap.min.js"></script>
 
-    <script src="build/js/vote.js"></script>
+    <script src="build/js/results.js"></script>
 
     <script>
       $(document).ready(function() {
-        Movie.init();
+        Results.init();
       });
     </script>
   

@@ -8,19 +8,27 @@ var model = require('./backend/model');
 
 var app = express();
 app.use(favicon(__dirname + '/public/images/favicon.ico'));
+app.use(express.static(__dirname + '/public'));
+
+/* Go go go */
+
+var port = process.env.port || 8081;
+var io = require('socket.io').listen(app.listen(port));
+console.log("Listening on port " + port);
+
+exports = module.exports = app;
 
 /* Callbacks */
-
-function newVote() {
-	io.sockets.volatile.emit('tweet', {
-	  user: data.user.screen_name,
-	  text: data.text
+function newVote(val) {
+	io.sockets.emit('vote', {
+	  user: "oyvind",
+	  text: "hallo"
 	});
 }
 
 /* Routes */
 app.post('/api/vote', function(req, res){
-	console.log("Got vote");
+	newVote();
 	res.send("OK!");
 });
 
@@ -37,16 +45,3 @@ app.get('/results', function(req, res) {
 		res.send(data);
 	})	
 });
-
-app.use(express.static(__dirname + '/public'));
-
-/* Go go go */
-
-var port = process.env.port || 8081;
-app.listen(port);
-
-var io = require('socket.IO').listen(app);
-
-console.log("Listening on port " + port);
-
-exports = module.exports = app;
