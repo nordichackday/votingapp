@@ -4,6 +4,8 @@
   "description": "vote",
   "main": "app.js",
   "dependencies": {
+    "body-parser": "^1.12.4",
+    "connect": "^3.3.5",
     "express": "^4.8.7",
     "gulp": "^3.8.11",
     "gulp-util": "^3.0.4",
