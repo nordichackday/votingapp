@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Emometer resultatside</title>
+
+    <!-- Styling -->
+    <link href="lib/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="lib/bootstrap/bootstrap-theme.min.css" rel="stylesheet">
+    
+    <link href="build/css/main.css" rel="stylesheet">
+  </head>
+
+  <body>    
+    <div class="container">     
+      <div id="content-wrapper">
+          <div id="users">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="13">
+  <path fill="#26292A" fill-rule="evenodd" d="M11.926 9.77v-.25l-.194-.15c-.31-.24-.61-.42-1.245-.77-.05-.03-.05-.03-.1-.057-.47-.258-.707-.4-.934-.558l-.377-.266-.29.36c-.616.77-1.673 1.252-2.84 1.252-1.108 0-2.12-.435-2.748-1.145l-.25-.28-.335.163c-.055.03-.845.404-1.098.53-.51.26-.91.495-1.236.748l-.197.15v2.693h.493l10.853.024h.495V9.77zM9.212 4.127C9.212 2.09 7.792.412 6 .412c-1.793 0-3.212 1.68-3.212 3.715S4.208 7.842 6 7.842c1.793 0 3.212-1.68 3.212-3.715z"/>
+</svg>
+            <span class="num" style="margin-left: 10px;">-</span>
+          </div>        
+          <div class="video_container">
+            <div id="video_box">
+                <div id="video_overlays">
+                </div>
+                <div>
+                  <video width="864px" height="486px" autoplay>
+                    <source src="video/football.mp4" type="video/mp4">
+                  </video>
+                </div>
+            </div>
+          </div>
+          <div style="clear:both"></div>
+          <div class="votes">
+            <div class="yes progress-bar-success">
+              <div class="middle-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="10">
+                  <path fill="#26292A" fill-rule="evenodd" d="M.644 9.376l7.776.158L4.7.09.643 9.377z"/>
+                </svg>                
+              </div>              
+              <div class="votes-icon">
+                &#x1F60D;
+              </div>
+            </div>
+              <div class="no">
+                <div class="votes-icon">
+                  &#x1F616;
+                </div>
+            </div>
+          </div>    
+          <div id="graphYes">
+          </div>
+          <div id="graphNo">
+          </div>                
+      </div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="lib/underscore/underscore-min.js"></script>
+    <script src="lib/bootstrap/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://underscorejs.org/underscore-min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+    <script src="build/js/results.js"></script>
+
+    <script>
+      $(document).ready(function() {
+        Results.init();
+      });
+
+        var graphResults = (function () {
+            $(function () {
+                $(document).ready(function () {
+                    Highcharts.setOptions({
+                        global: {
+                            useUTC: false
+                        }
+                    });
+
+                    $('#graphYes').highcharts({
+                        chart: {
+                            type: 'spline',
+                            animation: Highcharts.svg, // don't animate in old IE
+                            marginRight: 10,
+                            events: {
+                                load: function () {
+                                    var test = 0;
+                                    var socket = io.connect('http://192.168.1.18:8081/');
+                                    socket.on('aggregate', function (data) {
+                                        var newYesTotal = _.findWhere(data, { name: "yes" }).votes
+                                        var newNoTotal = _.findWhere(data, { name: "no" }).votes
+                                        test = Math.floor((newYesTotal/(newYesTotal + newNoTotal))*100);
+                                    });
+                                    // set up the updating of the chart each second
+                                    var series = this.series[0];
+                                    setInterval(function () {
+                                        var x = (new Date()).setSeconds((new Date()).getSeconds() + 10), // current time
+                                            y = Math.random();
+                                        series.addPoint([x, test], true, true);
+                                    }, 3000);
+                                },
+                            },
+                        },
+                        title: {
+                            text: 'Heart rate'
+                        },
+                        xAxis: {
+                            type: 'datetime',
+                            tickPixelInterval: 50
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Value'
+                            },
+                            plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }],
+                            min: 0,
+                            max: 100
+                        },
+                        tooltip: {
+                            formatter: function () {
+                                return '<b>' + this.series.name + '</b><br/>' +
+                                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                                    Highcharts.numberFormat(this.y, 2);
+                            }
+                        },
+                        legend: {
+                            enabled: false
+                        },
+                        exporting: {
+                            enabled: false
+                        }
+                        ,
+
+                        series: [{
+                            name: 'Random data',
+                            data: (function () {
+                                // generate an array of random data
+                                var data = [],
+                                    time = (new Date()).getTime(),
+                                    i;
+
+                                for (i = -19; i <= 0; i += 1) {
+                                    data.push({
+                                        x: time + i * 1000,
+                                        y: Math.random()
+                                    });
+                                }
+                                return data;
+                            }())
+                        }]
+                    });
+
+                    $('#graphNo').highcharts({
+                        chart: {
+                            type: 'spline',
+                            animation: Highcharts.svg, // don't animate in old IE
+                            marginRight: 10,
+                            events: {
+                                load: function () {
+                                    var test = 0;
+                                    var socket = io.connect('http://192.168.1.18:8081/');
+                                    socket.on('aggregate', function (data) {
+                                        var newYesTotal = _.findWhere(data, { name: "yes" }).votes
+                                        var newNoTotal = _.findWhere(data, { name: "no" }).votes
+                                        test = Math.floor((newNoTotal / (newNoTotal + newYesTotal)) * 100);
+                                    });
+                                    // set up the updating of the chart each second
+                                    var series = this.series[0];
+                                    setInterval(function () {
+                                        var x = (new Date()).setSeconds((new Date()).getSeconds() + 10), // current time
+                                            y = Math.random();
+                                        series.addPoint([x, test], true, true);
+                                    }, 3000);
+                                },
+                            },
+                        },
+                        title: {
+                            text: 'Poo rate',
+                            html: '&#x1F621;'
+                        },
+                        xAxis: {
+                            type: 'datetime',
+                            tickPixelInterval: 10
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Value'
+                            },
+                            plotLines: [{
+                                value: 0,
+                                width: 2,
+                                color: '#808080'
+                            }],
+                            min: 0,
+                            max: 100
+                        },
+                        tooltip: {
+                            formatter: function () {
+                                return '<b>' + this.series.name + '</b><br/>' +
+                                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                                    Highcharts.numberFormat(this.y, 1);
+                            }
+                        },
+                        legend: {
+                            enabled: false
+                        },
+                        exporting: {
+                            enabled: false
+                        },
+                        series: [{
+                            name: 'Random data',
+                            data: (function () {
+                                // generate an array of random data
+                                var data = [],
+                                    time = (new Date()).getTime(),
+                                    i;
+
+                                for (i = -19; i <= 0; i += 1) {
+                                    data.push({
+                                        x: time + i * 1000,
+                                        y: Math.random()
+                                    });
+                                }
+                                return data;
+                            }()),
+                            color: '#ff0000'
+                        }]
+                    });
+                });
+            });
+
+            return {
+                init: function() {}
+            };
+           
+        })();
+
+        //iconResults.init();
+        graphResults.init();      
+    </script>
+  
+  </body>
+</html>

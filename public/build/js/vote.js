@@ -44,7 +44,7 @@ var Vote = (function () {
   var initializePage = function () {
     socket = io.connect('http://192.168.1.18:8081');
     socket.on('users', function (data) {
-      $("#users .num").text(data + " stemmere");
+      $("#users .num").text(data + " stemmere");  
     });
     initButtons();
   };

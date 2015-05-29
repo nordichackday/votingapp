@@ -93,3 +93,24 @@ app.get('/results', function(req, res) {
 		res.send(data);
 	})	
 });
+
+app.get('/eurovision', function(req, res) {
+	fs.readFile("./public/views/eurovisionresults.html", function(err, data) {
+		res.set('Content-Type', 'text/html');
+		res.send(data);
+	})	
+});
+
+app.get('/footballvote', function(req, res) {
+	fs.readFile("./public/views/footballvote.html", function(err, data) {
+		res.set('Content-Type', 'text/html');
+		res.send(data);
+	})	
+});
+
+app.get('/football', function(req, res) {
+	fs.readFile("./public/views/football.html", function(err, data) {
+		res.set('Content-Type', 'text/html');
+		res.send(data);
+	})	
+});

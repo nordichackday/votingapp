@@ -12,7 +12,7 @@ var Results = (function () {
   function createVoteDiv(unicode) {
     var emojiDiv = $("<div>").addClass("emojiVote");
     emojiDiv.html(unicode);
-    emojiDiv.css("top", 390 + getRandomNum() % 35);
+    emojiDiv.css("top", 470 + getRandomNum() % 35);
     emojiDiv.css("left", getRandomNum() % 360 + 360);
     return emojiDiv;
   }
