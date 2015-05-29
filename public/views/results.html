@@ -13,12 +13,15 @@
     <link href="build/css/main.css" rel="stylesheet">
   </head>
 
-  <body style="background: #3B3B3B;">    
-    <div class="container">
-      <div class="topheader">
-        <div>Mentometer 2.0</div>
-      </div>      
+  <body>    
+    <div class="container">     
       <div id="content-wrapper">
+          <div id="users">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="13">
+  <path fill="#26292A" fill-rule="evenodd" d="M11.926 9.77v-.25l-.194-.15c-.31-.24-.61-.42-1.245-.77-.05-.03-.05-.03-.1-.057-.47-.258-.707-.4-.934-.558l-.377-.266-.29.36c-.616.77-1.673 1.252-2.84 1.252-1.108 0-2.12-.435-2.748-1.145l-.25-.28-.335.163c-.055.03-.845.404-1.098.53-.51.26-.91.495-1.236.748l-.197.15v2.693h.493l10.853.024h.495V9.77zM9.212 4.127C9.212 2.09 7.792.412 6 .412c-1.793 0-3.212 1.68-3.212 3.715S4.208 7.842 6 7.842c1.793 0 3.212-1.68 3.212-3.715z"/>
+</svg>
+            <span class="num" style="margin-left: 10px;">-</span>
+          </div>        
           <div class="video_container">
             <div id="video_box">
                 <div id="video_overlays">
@@ -32,11 +35,20 @@
           </div>
           <div style="clear:both"></div>
           <div class="votes">
-            <div class="yes">
-              &#x1F49C;
+            <div class="yes progress-bar-success">
+              <div class="middle-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="10">
+                  <path fill="#26292A" fill-rule="evenodd" d="M.644 9.376l7.776.158L4.7.09.643 9.377z"/>
+                </svg>                
+              </div>              
+              <div class="votes-icon">
+                &#x1F49B;
+              </div>
             </div>
-            <div class="no">
-              &#x1F4A9;
+              <div class="no">
+                <div class="votes-icon">
+                  &#x1F4A9;
+                </div>
             </div>
           </div>          
       </div>

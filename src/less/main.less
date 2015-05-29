@@ -26,23 +26,51 @@ li {
 	padding: 0;
 }
 
-.topheader {
+#top {
+	height: 35px;
+	background-color: #26292A;
 	width: 100%;
-	background: rgb(250, 250, 250);
-	padding: @contentPad;
-	padding-bottom: 30px;
-	margin-bottom: 50px;
+	display: block;
+	color: #ffffff;
+	font-family: Helvetica;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+#description {
+	margin-top: 40px;
+	color: #26292A;
+	font-size: 16px;
+}
+
+#description h3 {
+	font-size: 28px;
+	font-weight: bold;
+	margin-top: 0;
+	padding: 0;
+}
+
+#users {
+	max-width: 720px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #votebuttons {
-	width: 100%;
+	width: 230px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #votebuttons button {
-	width: 100%;
-	height: 150px;
+	width: 100px;
+	height: 100px;
 	margin: 0;
 	font-size: 2em;
+	-webkit-border-radius: 50px; 
+	-moz-border-radius: 50px; 
+	border-radius: 50px; 
+	margin: 5px;
 }
 
 .votes {
@@ -50,8 +78,9 @@ li {
 	width: 720px;
 	margin-left: auto;
 	margin-right: auto;	
-	height: 20px;
-	background: #FFFFFF;
+	height: 10px;
+	background: #c8c8c8;
+	overflow:visible !important;
 }
 
 .votes .yes {
@@ -63,18 +92,46 @@ li {
 	padding: 0;
 	margin: 0;
 	float: left;
+	overflow:visible !important;
 }
 
 .votes .no {
 	display: block;
 	height: 100%;
-	width: 50%;
+	width: 30px;
 	min-width: 30px;
-	background: #FFFFFF;
+	background: #c8c8c8;
 	padding: 0;
 	margin: 0;
+	float: left;
+}
+
+.votes-icon {
+	padding-top: 12px;
+	overflow: visible;
+	font-size: 20px;
+}
+
+.yes .votes-icon {
 	float: right;
-	text-align: right;
+	overflow: visible;
+	padding-right: 15px;
+}
+
+.no .votes-icon {
+	float: left;
+	padding-left: 15px;
+}
+
+.middle-arrow {
+	float: right;
+	padding-top: 11px;
+	position: relative;
+}
+
+.middle-arrow svg {
+	position: absolute;
+	left: -5px;
 }
 
 .video_container{
@@ -111,6 +168,7 @@ li {
 			margin-right: auto;
 			margin-left: auto;
 			font-size: @fontSize;
+			padding-top: 20px;
 		}
 
 		#content-wrapper{
@@ -120,8 +178,6 @@ li {
 		}
 	}
 }
-
-
 
 @media (max-width: 640px) {
 	#responsiveLayout > .set(100%, 13px);

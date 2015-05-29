@@ -1,5 +1,24 @@
 /** @jsx React.DOM */
 
+(function($) {
+  var IS_IOS = /iphone|ipad/i.test(navigator.userAgent);
+  $.fn.nodoubletapzoom = function() {
+    if (IS_IOS)
+      $(this).bind('touchstart', function preventZoom(e) {
+        var t2 = e.timeStamp
+          , t1 = $(this).data('lastTouch') || t2
+          , dt = t2 - t1
+          , fingers = e.originalEvent.touches.length;
+        $(this).data('lastTouch', t2);
+        if (!dt || dt > 500 || fingers > 1) return; // not double-tap
+
+        e.preventDefault(); // double tap - prevent the zoom
+        // also synthesize click events we just swallowed up
+        $(this).trigger('click').trigger('click');
+      });
+  };
+})(jQuery);
+
 var Vote = (function () {
   
   var voteUrl = "api/vote";
@@ -23,7 +42,10 @@ var Vote = (function () {
   }  
 
   var initializePage = function () {
-    socket = io.connect('http://localhost:8081');
+    socket = io.connect('http://192.168.1.18:8081');
+    socket.on('users', function (data) {
+      $("#users .num").text(data + " stemmere");
+    });
     initButtons();
   };
 
@@ -33,6 +55,8 @@ var Vote = (function () {
       var name = $(event.target).data("name");
       vote(name, unicodeValue);
     });
+
+    $('button').nodoubletapzoom();
   };
   return {
     init: initializePage
