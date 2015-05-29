@@ -5,8 +5,7 @@ var _ = require('underscore');
 var io = require('socket.IO');
 var bodyParser = require('body-parser')
 
-var model = require('./backend/model');
-
+var aggregate = require('./backend/aggregate');
 
 var app = express();
 
@@ -34,32 +33,51 @@ console.log("Listening on port " + port);
 
 exports = module.exports = app;
 
+var connected = 0;
+
 /* Callbacks */
 function newVote(voteMsg) {
 	io.sockets.emit('vote', voteMsg);
 }
 
 io.on('connection', function(socket){
-	console.log('a user connected');
+	connected = connected +1;
+	console.log(connected);
   	socket.on('sendVote', function(msg){
     	newVote(msg);
   	});
+
+  	socket.on('disconnect', function(){
+  		connected = connected-1;
+  	});
 });
 
-/* Routes */
-/* Routes */
-app.post('/api/vote', function(req, res){
-	console.log(req.body);
+setInterval(function() {
+	io.sockets.emit('aggregate', aggregate.get());
+	io.sockets.emit('users', connected);
+}, 2000);
 
+/* Routes */
+app.post('/api/vote', function(req, res) {
+	aggregate.countVote(req.body.name);
 	var msg = {
 		type: "vote",
 		name: req.body.name,
-		unicodeValue: req.body.unicodeValue		
+		unicodeValue: req.body.unicodeValue
 	};
 
 	newVote(msg);
-
 	res.send("OK!");
+});
+
+app.get('/api/vote/aggregate', function (req, res) {
+	var aggregatedVotes = aggregate.get();
+	res.json(aggregatedVotes);
+});
+
+app.get('/api/vote/aggregate/reset', function(req, res) {
+	aggregate.reset();
+	res.send("OK");
 });
 
 app.get('', function(req, res) {

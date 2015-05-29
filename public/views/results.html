@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>New Films Now</title>
+    <title>Mentometer results</title>
 
     <!-- Styling -->
     <link href="lib/bootstrap/bootstrap.min.css" rel="stylesheet">
@@ -13,15 +13,32 @@
     <link href="build/css/main.css" rel="stylesheet">
   </head>
 
-  <body>    
+  <body style="background: #3B3B3B;">    
     <div class="container">
       <div class="topheader">
         <div>Mentometer 2.0</div>
       </div>      
       <div id="content-wrapper">
-          <div id="results">
-            
+          <div class="video_container">
+            <div id="video_box">
+                <div id="video_overlays">
+                </div>
+                <div>
+                  <video width="720px" height="405px" >
+                    <source src="video/eurovision.mp4" type="video/mp4">
+                  </video>
+                </div>
+            </div>
           </div>
+          <div style="clear:both"></div>
+          <div class="votes">
+            <div class="yes">
+              &#x1F49C;
+            </div>
+            <div class="no">
+              &#x1F4A9;
+            </div>
+          </div>          
       </div>
     </div>
 
