@@ -56,7 +56,7 @@ var Results = (function () {
   }
 
   var initializePage = function () {
-    var socket = io.connect('http://192.168.1.18:8081');
+    var socket = io.connect();
     
     jQuery(function ($) {
       socket.on('vote', function (data) {

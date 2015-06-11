@@ -38,6 +38,7 @@ var connected = 0;
 /* Callbacks */
 function newVote(voteMsg) {
 	io.sockets.emit('vote', voteMsg);
+	console.log("Hei");
 }
 
 io.on('connection', function(socket){
