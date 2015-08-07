@@ -25,7 +25,7 @@
   },
   "scripts": {
     "test": "test.js",
-    "start": "nodemon app.js",
+    "start": "node app.js",
     "build": "gulp react && gulp less",
     "watch": "./node_modules/.bin/gulp"
   },
