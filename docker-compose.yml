@@ -1,0 +1,6 @@
+votingapp:
+  build: .
+  ports:
+    - 80:8081
+  environment:
+    PORT: 8081
