@@ -2,12 +2,18 @@ var express = require('express');
 var favicon = require('serve-favicon');
 var fs = require('fs');
 var _ = require('underscore');
-var io = require('socket.IO');
+var io = require('socket.io');
 var bodyParser = require('body-parser')
 
 var aggregate = require('./backend/aggregate');
 
 var app = express();
+
+// Turn off Varnish cache
+app.use(function (req, res, next) {
+	res.set('X-TTL', '0s');
+	next();
+});
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -15,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-	
+
 app.use(favicon(__dirname + '/public/images/favicon.ico'));
 app.use(express.static(__dirname + '/public'));
 
@@ -85,33 +91,33 @@ app.get('', function(req, res) {
 	fs.readFile("./public/views/index.html", function(err, data) {
 		res.set('Content-Type', 'text/html');
 		res.send(data);
-	})	
+	})
 });
 
 app.get('/results', function(req, res) {
 	fs.readFile("./public/views/results.html", function(err, data) {
 		res.set('Content-Type', 'text/html');
 		res.send(data);
-	})	
+	})
 });
 
 app.get('/eurovision', function(req, res) {
 	fs.readFile("./public/views/eurovisionresults.html", function(err, data) {
 		res.set('Content-Type', 'text/html');
 		res.send(data);
-	})	
+	})
 });
 
 app.get('/footballvote', function(req, res) {
 	fs.readFile("./public/views/footballvote.html", function(err, data) {
 		res.set('Content-Type', 'text/html');
 		res.send(data);
-	})	
+	})
 });
 
 app.get('/football', function(req, res) {
 	fs.readFile("./public/views/football.html", function(err, data) {
 		res.set('Content-Type', 'text/html');
 		res.send(data);
-	})	
+	})
 });
