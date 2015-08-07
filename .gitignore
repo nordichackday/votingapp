@@ -12,7 +12,6 @@ pids
 
 .grunt
 build/Release
-public/video
 
 # Dependency directory
 # Deployed apps should consider commenting this line out:
