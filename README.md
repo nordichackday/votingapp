@@ -18,6 +18,8 @@ npm run build
 
 ## Watch
 
+Start the server and build daemon:
+
 ```shell
 npm run watch
 ```
