@@ -1,13 +1,25 @@
 var express = require('express');
+var ipfilter = require('express-ipfilter');
 var favicon = require('serve-favicon');
 var fs = require('fs');
 var _ = require('underscore');
 var io = require('socket.io');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 
 var aggregate = require('./backend/aggregate');
+var parseIpfilter = require('./backend/parse-ipfilter');
 
 var app = express();
+var port = process.env.port || 8081;
+var ips = process.env.IPFILTER ? parseIpfilter(process.env.IPFILTER) : null;
+
+if (ips) { // Block ips
+	app.use(ipfilter(ips, {
+		mode: 'allow',
+		allowPrivateIPs: true,
+		ranges: true
+	}));
+}
 
 // Turn off Varnish cache
 app.use(function (req, res, next) {
@@ -21,21 +33,20 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-
 app.use(favicon(__dirname + '/public/images/favicon.ico'));
 app.use(express.static(__dirname + '/public'));
 
 app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  return next();
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
+	res.header('Access-Control-Allow-Headers', 'Content-Type');
+	return next();
 });
 
 /* Go go go */
-var port = process.env.port || 8081;
-var io = require('socket.io').listen(app.listen(port));
-console.log("Listening on port " + port);
+var server = app.listen(port);
+var io = require('socket.io').listen(server);
+console.log('Listening on port ' + port);
 
 exports = module.exports = app;
 
@@ -44,25 +55,25 @@ var connected = 0;
 /* Callbacks */
 function newVote(voteMsg) {
 	io.sockets.emit('vote', voteMsg);
-	console.log("Hei");
+	// console.log("Hei");
 }
 
 io.on('connection', function(socket){
 	connected = connected +1;
 	console.log(connected);
-  	socket.on('sendVote', function(msg){
-    	newVote(msg);
-  	});
+		socket.on('sendVote', function(msg){
+			newVote(msg);
+		});
 
-  	socket.on('disconnect', function(){
-  		connected = connected-1;
-  	});
+		socket.on('disconnect', function(){
+			connected = connected-1;
+		});
 });
 
 setInterval(function() {
 	io.sockets.emit('aggregate', aggregate.get());
 	io.sockets.emit('users', connected);
-}, 2000);
+}, 250);
 
 /* Routes */
 app.post('/api/vote', function(req, res) {
