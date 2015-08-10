@@ -4,3 +4,5 @@ MAINTAINER Øyvind Holmstad
 
 RUN echo "Europe/Oslo" > /etc/timezone
 RUN dpkg-reconfigure -f noninteractive tzdata
+
+RUN npm run build
